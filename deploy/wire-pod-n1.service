@@ -1,0 +1,23 @@
+[Unit]
+Description=Wire-Pod Chinese UI on N1
+Wants=network-online.target
+After=network-online.target
+StartLimitIntervalSec=120
+StartLimitBurst=5
+
+[Service]
+Type=simple
+WorkingDirectory=/opt/wire-pod/current/chipper
+Environment=STT_SERVICE=vosk
+Environment=STT_LANGUAGE=zh-CN
+Environment=DEBUG_LOGGING=false
+Environment=USE_INBUILT_BLE=false
+Environment=LD_LIBRARY_PATH=/opt/wire-pod/libvosk
+ExecStart=/opt/wire-pod/current/chipper/chipper
+Restart=on-failure
+RestartSec=5
+TimeoutStopSec=30
+UMask=0077
+
+[Install]
+WantedBy=multi-user.target
