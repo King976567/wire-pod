@@ -1,4 +1,12 @@
 .github
+.git
+certs
+ssh_root_key
+chipper/openaiChats.json
+chipper/webroot/sessions
+chipper/windows/tmp
+chipper/windows/chipper.exe
+chipper/chipper
 .idea
 .vscode
 *.log

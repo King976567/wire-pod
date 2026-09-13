@@ -1,0 +1,29 @@
+# Run from the repository: docker compose -p wire-pod-zh -f docker/compose.nas.yaml up -d
+services:
+  wire-pod:
+    container_name: wire-pod-zh
+    hostname: escapepod
+    image: wire-pod-zh:${WIREPOD_VERSION:-chinese-ui}
+    restart: unless-stopped
+    environment:
+      WIREPOD_DATA_DIR: /data
+      WIREPOD_DEBUG_LOGGING: "false"
+    ports:
+      - "18081:80"
+      - "18443:443"
+      - "18080:8080"
+      - "18084:8084"
+    volumes:
+      - data:/data
+      - images:/images
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://localhost:8080/ok"]
+      interval: 30s
+      timeout: 5s
+      retries: 5
+      start_period: 60s
+volumes:
+  data:
+    name: wire-pod-zh-data
+  images:
+    name: wire-pod-zh-images
