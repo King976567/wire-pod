@@ -27,7 +27,7 @@ let myChart = new Chart(stimChart, {
     labels: [],
     datasets: [
       {
-        label: "Stimulation",
+        label: "兴奋度",
         data: [],
         //backgroundColor: 'rgba(255, 99, 132, 0.2)',
         backgroundColor: "rgba(51, 237, 109, 1)",
@@ -178,7 +178,7 @@ function goToControlPage() {
 }
 
 function sendLocation() {
-  locationInput = document.getElementById("locationInput").value;
+  const locationInput = document.getElementById("locationInput").value.trim();
   if (locationInput == "") {
     alert("位置不能为空。");
     return;
@@ -186,7 +186,7 @@ function sendLocation() {
   let xhr = new XMLHttpRequest();
   xhr.open(
     "POST",
-    "/api-sdk/location?serial=" + esn + "&location=" + locationInput
+    "/api-sdk/location?serial=" + encodeURIComponent(esn) + "&location=" + encodeURIComponent(locationInput)
   );
   xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
   xhr.send();
@@ -196,13 +196,13 @@ function sendLocation() {
 }
 
 function sendTimeZone() {
-  timezone = document.getElementById("tzInput").value;
+  const timezone = document.getElementById("tzInput").value;
   if (timezone == "") {
     alert("时区不能为空。");
     return;
   }
   let xhr = new XMLHttpRequest();
-  xhr.open("POST", "/api-sdk/timezone?serial=" + esn + "&timezone=" + timezone);
+  xhr.open("POST", "/api-sdk/timezone?serial=" + encodeURIComponent(esn) + "&timezone=" + encodeURIComponent(timezone));
   xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
   xhr.send();
   xhr.onload = function () {
@@ -376,41 +376,42 @@ function getCurrentSettings() {
 
     var s1 = document.getElementById("currentVolume");
     const s1P = document.createElement("p");
-    document.getElementById(volumeT).checked = true;
+    selectSettingsRadio(volumeT);
 
     var s2 = document.getElementById("currentEyeColor");
     const s2P = document.createElement("p");
     if (eyeColorT != "none" && eyeColorT != "Custom") {
-      document.getElementById(eyeColorT).checked = true;
+      selectSettingsRadio(eyeColorT);
     }
 
     var s3 = document.getElementById("currentLocale");
     const s3P = document.createElement("p");
-    document.getElementById(localeS).checked = true;
+    selectSettingsRadio(localeS);
 
     var s4 = document.getElementById("currentTimeSet");
     const s4P = document.createElement("p");
-    document.getElementById(timeSetT).checked = true;
+    selectSettingsRadio(timeSetT);
 
     var s5 = document.getElementById("currentTempFormat");
     const s5P = document.createElement("p");
-    document.getElementById(tempFormatT).checked = true;
+    selectSettingsRadio(tempFormatT);
 
     var s6 = document.getElementById("currentButton");
     const s6P = document.createElement("p");
-    document.getElementById(buttonT).checked = true;
+    selectSettingsRadio(buttonT);
+    s6P.textContent = "当前按钮功能：" + (buttonT === "Hey Vector" ? "唤醒 Vector（Hey Vector）" : "唤醒 Alexa（亚马逊语音助手）");
+    s6.replaceChildren(s6P);
 
     var s10 = document.getElementById("currentLocation");
     const s10P = document.createElement("p");
-    s10P.textContent = "当前位置设置：" + `${location}`;
-    document.getElementById("locationInput").placeholder = `${location}`;
+    s10P.textContent = "当前位置：" + formatRobotLocation(location);
+    document.getElementById("locationInput").placeholder = location ? formatRobotLocation(location) : "请输入城市，例如：青岛市";
     s10.innerHTML = "";
     s10.appendChild(s10P);
 
     var s11 = document.getElementById("currentTimeZone");
     const s11P = document.createElement("p");
-    s11P.textContent = "当前时区设置：" + `${timezone}`;
-    document.getElementById("tzInput").value = `${timezone}`;
+    s11P.textContent = "当前时区：" + showCurrentTimeZone(document.getElementById("tzInput"), timezone);
     s11.innerHTML = "";
     s11.appendChild(s11P);
   };

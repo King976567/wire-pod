@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN">
 
 <head>
   <meta charset="UTF-8">
@@ -36,13 +36,13 @@
         <div class="main-nav-child"><a href="#" onclick="showSection('section-actions'); return false;"><i
               class="fa-solid fa-person-running" id="icon-actions" name="icon"></i><br />动作</a></div>
         <div class="main-nav-child"><a href="#" onclick="showSection('section-stim'); return false;"><i
-              class="fa-solid fa-face-laugh-beam" id="icon-stim" name="icon"></i><br />刺激动作</a></div>
+              class="fa-solid fa-face-laugh-beam" id="icon-stim" name="icon"></i><br />兴奋度</a></div>
         <div class="main-nav-child"><a href="#" onclick="showSection('section-stats'); return false;"><i
-              class="fa-solid fa-chart-simple" id="icon-stim" name="icon"></i><br />统计信息</a></div>
+              class="fa-solid fa-chart-simple" id="icon-stats" name="icon"></i><br />统计信息</a></div>
         <div class="main-nav-child"><a href="#" onclick="showSection('section-photos'); getPhotos(); return false;"><i
               class="fa-solid fa-images" id="icon-photos" name="icon"></i><br />照片</a></div>
         <div class="main-nav-child"><a href="#" onclick="showSection('section-locale'); return false;"><i
-              class="fa-solid fa-earth-americas" id="icon-locale" name="icon"></i><br />地区</a></div>
+              class="fa-solid fa-earth-americas" id="icon-locale" name="icon"></i><br />语言与地区</a></div>
         <div class="main-nav-child"><a href="#" onclick="showSection('section-time'); return false;"><i
               class="fa-solid fa-clock" id="icon-time" name="icon"></i><br />时间</a></div>
         <div class="main-nav-child"><a href="#" onclick="showSection('section-temp'); return false;"><i
@@ -184,7 +184,8 @@
       </div>
 
       <div id="section-stim" class="toggleable-section" style="display:none;">
-        <h2 class="center">刺激动作</h2>
+        <h2 class="center">兴奋度</h2>
+        <p class="center">查看 Vector 兴奋程度的变化，数值越高表示越兴奋。</p>
         <hr class="small-hr">
         <div class="center">
           <canvas id="stimChart"></canvas>
@@ -213,8 +214,9 @@
       </div>
 
       <div id="section-locale" class="toggleable-section" style="display:none;">
-        <h2 class="center">地区</h2>
+        <h2 class="center">机器人语言与地区</h2>
         <hr class="small-hr">
+        <p class="center">这里设置机器人的语言与地区，不影响网页的中文显示或服务器的语音识别语言。</p>
         <div id="currentLocale" class="center"></div>
         <div style="text-align: left;" class="center">
           <label>
@@ -238,7 +240,7 @@
               onclick="sendForm('/api-sdk/locale?locale=fr-FR')">法语<br>
           </label>
           <label>
-            <input type="radio" name="locale" id="ja-FP" value="Japanese"
+            <input type="radio" name="locale" id="ja-JP" value="Japanese"
               onclick="sendForm('/api-sdk/locale?locale=ja-JP')">日语<br>
           </label>
         </div>
@@ -283,17 +285,18 @@
       </div>
 
       <div id="section-button" class="toggleable-section" style="display:none;">
-        <h2 class="center">按钮动作</h2>
+        <h2 class="center">背部按钮功能</h2>
         <hr class="small-hr">
+        <p class="center">选择按下背部按钮时唤醒的语音助手。此设置不会修改语音唤醒词。</p>
         <div id="currentButton" class="center"></div>
         <div style="text-align: left;" class="center">
           <label>
             <input type="radio" name="but" id="Hey Vector" value="Hey Vector"
-              onclick="sendForm('/api-sdk/button_hey_vector')">Hey Vector<br>
+              onclick="sendForm('/api-sdk/button_hey_vector')">唤醒 Vector（Hey Vector）<br>
           </label>
           <label>
             <input type="radio" name="but" id="Alexa" value="Alexa"
-              onclick="sendForm('/api-sdk/button_alexa')">Alexa<br>
+              onclick="sendForm('/api-sdk/button_alexa')">唤醒 Alexa（亚马逊语音助手）<br>
           </label>
         </div>
         <br>
@@ -318,9 +321,9 @@
         <h2 class="center">设置位置</h2>
         <hr class="small-hr">
         <div id="currentLocation"></div>
-        <small class="desc">示例：北京市</small>
+        <small class="desc">可输入中文城市名称，例如：青岛市、北京市。修改后点击“提交位置”保存。</small>
         <div class="center">
-          <input class="tinput" id="locationInput" name="locationInput" type="text" placeholder="在此输入位置">
+          <input class="tinput" id="locationInput" name="locationInput" type="text" placeholder="请输入城市，例如：青岛市" aria-label="城市名称">
         </div>
         <hr class="small-hr">
         <button onclick="sendLocation()">提交位置</button>
@@ -331,51 +334,54 @@
         <h2 style="margin-bottom:0px;">设置时区</h2>
         <hr class="small-hr">
         <div id="currentTimeZone" class="center"></div>
+        <p class="center">中国大陆请选择“北京时间（北京／上海，UTC+8）”。</p>
         <div class="center">
-          <!--<input class="tinput" id="tzInput" name="tzInput" type="text" placeholder="Put time zone here">-->
-          <select id="tzInput" value="" class="vec-field">
-            <option value="Pacific/Honolulu">Pacific/Honolulu</option>
-            <option value="America/Juneau">America/Juneau</option>
-            <option value="America/Los_Angeles">America/Los_Angeles</option>
-            <option value="America/Phoenix">America/Phoenix</option>
-            <option value="America/Denver">America/Denver</option>
-            <option value="America/Lima">America/Lima</option>
-            <option value="America/Chicago">America/Chicago</option>
-            <option value="America/Bogota">America/Bogota</option>
-            <option value="America/New_York">America/New_York</option>
-            <option value="America/Argentina/Buenos_Aires">America/Argentina/Buenos_Aires</option>
-            <option value="America/Santiago">America/Santiago</option>
-            <option value="America/Sao_Paulo">America/Sao_Paulo</option>
-            <option value="America/Halifax">America/Halifax</option>
-            <option value="America/St_Johns">America/St_Johns</option>
-            <option value="GMT">GMT</option>
-            <option value="Europe/Lisbon">Europe/Lisbon</option>
-            <option value="Europe/London">Europe/London</option>
-            <option value="Europe/Paris">Europe/Paris</option>
-            <option value="Europe/Athens">Europe/Athens</option>
-            <option value="Europe/Istanbul">Europe/Istanbul</option>
-            <option value="Europe/Moscow">Europe/Moscow</option>
-            <option value="Africa/Lagos">Africa/Lagos</option>
-            <option value="Africa/Harare">Africa/Harare</option>
-            <option value="Africa/Addis_Ababa">Africa/Addis_Ababa</option>
-            <option value="Asia/Dubai">Asia/Dubai</option>
-            <option value="Asia/Tehran">Asia/Tehran</option>
-            <option value="Asia/Karachi">Asia/Karachi</option>
-            <option value="Asia/Kolkata">Asia/Kolkata</option>
-            <option value="Asia/Dhaka">Asia/Dhaka</option>
-            <option value="Asia/Bangkok">Asia/Bangkok</option>
-            <option value="Asia/Jakarta">Asia/Jakarta</option>
-            <option value="Asia/Hong_Kong">Asia/Hong_Kong</option>
-            <option value="Asia/Singapore">Asia/Singapore</option>
-            <option value="Asia/Manila">Asia/Manila</option>
-            <option value="Asia/Seoul">Asia/Seoul</option>
-            <option value="Asia/Tokyo">Asia/Tokyo</option>
-            <option value="Australia/Perth">Australia/Perth</option>
-            <option value="Australia/Darwin">Australia/Darwin</option>
-            <option value="Australia/Adelaide">Australia/Adelaide</option>
-            <option value="Australia/Brisbane">Australia/Brisbane</option>
-            <option value="Australia/Sydney">Australia/Sydney</option>
-            <option value="Australia/Auckland">Australia/Auckland</option>
+          <select id="tzInput" class="vec-field" aria-label="时区">
+            <option value="Asia/Shanghai">北京时间（北京／上海，UTC+8）</option>
+            <option value="Asia/Hong_Kong">中国香港（UTC+8）</option>
+            <option value="Asia/Macau">中国澳门（UTC+8）</option>
+            <option value="Asia/Taipei">中国台北（UTC+8）</option>
+            <option value="Pacific/Honolulu">美国·檀香山（夏威夷）</option>
+            <option value="America/Juneau">美国·朱诺（阿拉斯加）</option>
+            <option value="America/Los_Angeles">美国·洛杉矶</option>
+            <option value="America/Phoenix">美国·凤凰城</option>
+            <option value="America/Denver">美国·丹佛</option>
+            <option value="America/Lima">秘鲁·利马</option>
+            <option value="America/Chicago">美国·芝加哥</option>
+            <option value="America/Bogota">哥伦比亚·波哥大</option>
+            <option value="America/New_York">美国·纽约</option>
+            <option value="America/Argentina/Buenos_Aires">阿根廷·布宜诺斯艾利斯</option>
+            <option value="America/Santiago">智利·圣地亚哥</option>
+            <option value="America/Sao_Paulo">巴西·圣保罗</option>
+            <option value="America/Halifax">加拿大·哈利法克斯</option>
+            <option value="America/St_Johns">加拿大·圣约翰斯</option>
+            <option value="GMT">格林尼治标准时间（UTC+0）</option>
+            <option value="Europe/Lisbon">葡萄牙·里斯本</option>
+            <option value="Europe/London">英国·伦敦</option>
+            <option value="Europe/Paris">法国·巴黎</option>
+            <option value="Europe/Athens">希腊·雅典</option>
+            <option value="Europe/Istanbul">土耳其·伊斯坦布尔</option>
+            <option value="Europe/Moscow">俄罗斯·莫斯科</option>
+            <option value="Africa/Lagos">尼日利亚·拉各斯</option>
+            <option value="Africa/Harare">津巴布韦·哈拉雷</option>
+            <option value="Africa/Addis_Ababa">埃塞俄比亚·亚的斯亚贝巴</option>
+            <option value="Asia/Dubai">阿联酋·迪拜</option>
+            <option value="Asia/Tehran">伊朗·德黑兰</option>
+            <option value="Asia/Karachi">巴基斯坦·卡拉奇</option>
+            <option value="Asia/Kolkata">印度·加尔各答</option>
+            <option value="Asia/Dhaka">孟加拉国·达卡</option>
+            <option value="Asia/Bangkok">泰国·曼谷</option>
+            <option value="Asia/Jakarta">印度尼西亚·雅加达</option>
+            <option value="Asia/Singapore">新加坡（UTC+8）</option>
+            <option value="Asia/Manila">菲律宾·马尼拉</option>
+            <option value="Asia/Seoul">韩国·首尔</option>
+            <option value="Asia/Tokyo">日本·东京</option>
+            <option value="Australia/Perth">澳大利亚·珀斯</option>
+            <option value="Australia/Darwin">澳大利亚·达尔文</option>
+            <option value="Australia/Adelaide">澳大利亚·阿德莱德</option>
+            <option value="Australia/Brisbane">澳大利亚·布里斯班</option>
+            <option value="Australia/Sydney">澳大利亚·悉尼</option>
+            <option value="Pacific/Auckland">新西兰·奥克兰</option>
           </select>
         </div>
         <br />
@@ -393,7 +399,8 @@
   <script src="./js/iro.min.js"></script>
   <script src="./js/common.js"></script>
   <script src="../js/battery.js"></script>
-  <script src="./js/main.js"></script>
+  <script src="./js/settings-labels.js?v=20260913"></script>
+  <script src="./js/main.js?v=20260913-settings"></script>
   <script src="./js/faces.js"></script>
   <script src="../js/ui.js"></script>
   <script src="./js/heyvector.js"></script>
