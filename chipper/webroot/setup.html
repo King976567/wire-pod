@@ -107,7 +107,7 @@
             <span id="openAIInput" style="display: none">
               <label for="openaiKey">OpenAI 密钥：</label>
               <input type="text" name="openaiKey" id="openaiKey" /><br />
-              <label for="openaiKey">GPT 提示词 <small class="desc">（留空使用默认值）：</small></label><br />
+              <label for="openAIPrompt">GPT 提示词 <small class="desc">（留空使用默认值）：</small></label><br />
               <small><label class="desc" for="openAIPrompt">（默认：“你是一只友善、活泼的机器人 Vector。请让回答简洁而有信息量。”）</label></small>
               <input type="text" name="openAIPrompt" id="openAIPrompt" /><br />
               <label for="openaiVoice">非英语语言使用的 OpenAI TTS 声音：</label><br />
@@ -125,11 +125,11 @@
 
             <span id="customAIInput" style="display: none">
               <small class="desc">支持所有兼容 OpenAI API 的 LLM 服务，适合高级用户。</small><br />
-              <label for="customKey">API 密钥 <small class="desc">（Ollama 只需填写“ollama”）</small>:</label>
+              <label for="customKey">API 密钥 <small class="desc">（Ollama 只需填写“ollama”）</small>：</label>
               <input type="text" name="customKey" id="customKey" /><br />
               <label for="customAIEndpoint">API 地址 <small class="desc">（例如 http://localhost:11434/v1）</small>：</label>
               <input type="text" name="customAIEndpoint" id="customAIEndpoint" /><br />
-              <label for="customModel">LLM 模型名称 <small class="desc">（例如“llama3”）</small>:</label>
+              <label for="customModel">LLM 模型名称 <small class="desc">（例如“llama3”）</small>：</label>
               <input type="text" name="customModel" id="customModel" /><br />
               <label for="customAIPrompt">LLM 提示词 <small class="desc">（留空使用默认值）</small>：</label><br />
               <small><label class="desc" for="customAIPrompt">（默认：“你是一只友善、活泼的机器人 Vector。请让回答简洁而有信息量。”）</label></small>

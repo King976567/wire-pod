@@ -11,7 +11,7 @@ async function triggerHeyVector() {
     });
     
     if (!response.ok) {
-      throw new Error("Failed to trigger wake word");
+      throw new Error("触发唤醒词失败");
     }
     
     const result = await response.text();
@@ -19,7 +19,7 @@ async function triggerHeyVector() {
     if (result.includes("success") || result.includes("ok")) {
       statusDiv.innerHTML = "<p style='color: var(--fg-color);'>Hey Vector 已成功触发！</p>";
     } else {
-      throw new Error(result || "Unknown error");
+      throw new Error(result || "未知错误");
     }
     
     setTimeout(() => {
@@ -27,7 +27,7 @@ async function triggerHeyVector() {
     }, 5000);
     
   } catch (error) {
-    console.error("Error triggering Hey Vector:");
+    console.error("触发 Hey Vector 时出错：");
     
     setTimeout(() => {
       statusDiv.innerHTML = "";

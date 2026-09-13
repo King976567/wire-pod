@@ -63,25 +63,25 @@
         <div id="currentVolume" class="center"></div>
         <div style="text-align: left;" class="center">
           <label>
-            <input type="radio" name="vol" id="Mute" value="Mute" onclick="sendForm('/api-sdk/volume?volume=0')">Mute
+            <input type="radio" name="vol" id="Mute" value="Mute" onclick="sendForm('/api-sdk/volume?volume=0')">静音
           </label>
           <label>
-            <input type="radio" name="vol" id="Low" value="Low" onclick="sendForm('/api-sdk/volume?volume=1')">Low
+            <input type="radio" name="vol" id="Low" value="Low" onclick="sendForm('/api-sdk/volume?volume=1')">低
           </label>
           <label>
             <input type="radio" name="vol" id="Medium Low" value="Medium Low"
-              onclick="sendForm('/api-sdk/volume?volume=2')">Medium Low
+              onclick="sendForm('/api-sdk/volume?volume=2')">中低
           </label>
           <label>
             <input type="radio" name="vol" id="Medium" value="Medium"
-              onclick="sendForm('/api-sdk/volume?volume=3')">Medium
+              onclick="sendForm('/api-sdk/volume?volume=3')">中
           </label>
           <label>
             <input type="radio" name="vol" id="Medium High" value="Medium High"
-              onclick="sendForm('/api-sdk/volume?volume=4')">Medium High
+              onclick="sendForm('/api-sdk/volume?volume=4')">中高
           </label>
           <label>
-            <input type="radio" name="vol" id="High" value="High" onclick="sendForm('/api-sdk/volume?volume=5')">High
+            <input type="radio" name="vol" id="High" value="High" onclick="sendForm('/api-sdk/volume?volume=5')">高
           </label>
         </div>
         <br>
@@ -153,7 +153,7 @@
         <h3 class="center">添加新面孔：</h3>
         <p class="center">输入要添加的名称：</p>
         <div class="center">
-          <input class="tinput" id="faceInput" name="faceInput" type="text" placeholder="Put name here">
+          <input class="tinput" id="faceInput" name="faceInput" type="text" placeholder="在此输入名称">
         </div>
         <div class="center">
           <button onclick="addFace()">添加面孔</button>
@@ -165,16 +165,11 @@
         <h2 class="center">快捷操作</h2>
         <hr class="small-hr">
         <div class="center">
-          <button onclick="sendForm('/api-sdk/cloud_intent?intent=explore_start')">Explore
-            Start</button>
-          <button onclick="sendForm('/api-sdk/cloud_intent?intent=intent_imperative_dance')">Listen for
-            Beat</button>
-          <button onclick="sendForm('/api-sdk/cloud_intent?intent=intent_system_sleep')">Go to
-            Sleep</button>
-          <button onclick="sendForm('/api-sdk/cloud_intent?intent=intent_imperative_fetchcube')">Fetch
-            Cube</button>
-          <button onclick="sendForm('/api-sdk/cloud_intent?intent=intent_system_charger')">Go
-            Home</button>
+          <button onclick="sendForm('/api-sdk/cloud_intent?intent=explore_start')">开始探索</button>
+          <button onclick="sendForm('/api-sdk/cloud_intent?intent=intent_imperative_dance')">聆听节拍</button>
+          <button onclick="sendForm('/api-sdk/cloud_intent?intent=intent_system_sleep')">进入睡眠</button>
+          <button onclick="sendForm('/api-sdk/cloud_intent?intent=intent_imperative_fetchcube')">取回方块</button>
+          <button onclick="sendForm('/api-sdk/cloud_intent?intent=intent_system_charger')">回到充电座</button>
         </div>
         <hr class="small-hr">
         <h3 class="center">触发 Hey Vector</h3>

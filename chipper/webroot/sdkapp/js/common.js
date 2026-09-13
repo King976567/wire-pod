@@ -11,7 +11,7 @@ async function getSDKInfo() {
     var data = await response.json();
     return data;
   } catch (error) {
-    console.error('Unable to get SDK info:', error);
+    console.error('获取 SDK 信息失败：', error);
     throw error;
   }
 }
@@ -36,7 +36,7 @@ async function getBatteryStatus(serial) {
     var data = await response.json(); // {"status":{"code":1},"battery_level":3,"battery_volts":3.9210937,"is_on_charger_platform":true}
     return data;
   } catch (error) {
-    console.error('Unable to get battery status:', error);
+    console.error('获取电池状态失败：', error);
     throw error;
   }
 }

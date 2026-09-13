@@ -14,7 +14,7 @@ function refreshFaceList() {
     .then((response) => response.text())
     .then((response) => {
       if (response.includes("null")) {
-        console.log("no faces exist.");
+        console.log("没有面孔。");
         showFaceButtons = false;
         var option = document.createElement("option");
         option.text = "没有找到面孔。请先告诉 Vector 你的名字。";

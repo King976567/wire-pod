@@ -70,7 +70,7 @@ document.getElementById('fileInput').addEventListener('change', async () => {
         // show send button
         document.getElementById('uploadButton').style.display = 'inline-block';
     } catch (error) {
-        console.error('Error processing the file:', error);
+        console.error('处理音频文件失败：', error);
     }
 });
 
@@ -137,12 +137,12 @@ async function uploadAudio(blob) {
         });
 
         if (!response.ok) {
-            throw new Error('Erro to send audio: ' + response.statusText);
+            throw new Error('发送音频失败：' + response.statusText);
         }
 
         const result = await response.json();
-        console.log('Audio sent successfully:', result);
+        console.log('音频发送成功：', result);
     } catch (error) {
-        console.error('Error sending audio:', error);
+        console.error('发送音频失败：', error);
     }
 }

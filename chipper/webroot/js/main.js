@@ -44,7 +44,7 @@ function checkInited() {
   fetch("/api/is_api_v3").then((response) => {
     if (!response.ok) {
       alert(
-        "This webroot does not match with the wire-pod binary. Some functionality will be broken. There was either an error during the last update, or you did not precisely follow the update guide. https://github.com/kercre123/wire-pod/wiki/Things-to-Know#updating-wire-pod"
+        "网页文件与 Wire-Pod 程序版本不匹配，部分功能可能无法使用。可能是上次更新出错，或没有严格按照更新指南操作。请参阅：https://github.com/kercre123/wire-pod/wiki/Things-to-Know#updating-wire-pod"
       );
     }
   });
@@ -87,22 +87,22 @@ function editFormCreate() {
         form.id = "editIntentForm";
         form.name = "editIntentForm";
         form.innerHTML = `
-          <label for="name">Name:<br><input type="text" id="name" value="${intent.name}"></label><br>
-          <label for="description">Description:<br><input type="text" id="description" value="${intent.description}"></label><br>
-          <label for="utterances">Utterances:<br><input type="text" id="utterances" value="${intent.utterances.join(",")}"></label><br>
-          <label for="intent">Intent:<br><select id="intent">${intentsJson
+          <label for="name">名称：<br><input type="text" id="name" value="${intent.name}"></label><br>
+          <label for="description">描述：<br><input type="text" id="description" value="${intent.description}"></label><br>
+          <label for="utterances">触发说法：<br><input type="text" id="utterances" value="${intent.utterances.join(",")}"></label><br>
+          <label for="intent">意图：<br><select id="intent">${intentsJson
             .map(
               (name) =>
                 `<option value="${name}" ${name === intent.intent ? "selected" : ""
                 }>${name}</option>`
             )
             .join("")}</select></label><br>
-          <label for="paramname">Param Name:<br><input type="text" id="paramname" value="${intent.params.paramname}"></label><br>
-          <label for="paramvalue">Param Value:<br><input type="text" id="paramvalue" value="${intent.params.paramvalue}"></label><br>
-          <label for="exec">Exec:<br><input type="text" id="exec" value="${intent.exec}"></label><br>
-          <label for="execargs">Exec Args:<br><input type="text" id="execargs" value="${intent.execargs.join(",")}"></label><br>
-          <label for="luascript">Lua code to run:</label><br><textarea id="luascript">${intent.luascript}</textarea>
-          <button onclick="editIntent(${intentNumber})">Submit</button>
+          <label for="paramname">参数名称：<br><input type="text" id="paramname" value="${intent.params.paramname}"></label><br>
+          <label for="paramvalue">参数值：<br><input type="text" id="paramvalue" value="${intent.params.paramvalue}"></label><br>
+          <label for="exec">脚本/程序路径：<br><input type="text" id="exec" value="${intent.exec}"></label><br>
+          <label for="execargs">脚本/程序参数：<br><input type="text" id="execargs" value="${intent.execargs.join(",")}"></label><br>
+          <label for="luascript">要执行的 Lua 代码：</label><br><textarea id="luascript">${intent.luascript}</textarea>
+          <button onclick="editIntent(${intentNumber})">提交</button>
         `;
         //form.querySelector("#submit").onclick = () => editIntent(intentNumber);
         getE("editIntentForm").innerHTML = "";
