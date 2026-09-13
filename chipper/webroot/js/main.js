@@ -281,6 +281,45 @@ function checkKG() {
   }
 }
 
+const customAIPresets = {
+  deepseek: {
+    endpoint: "https://api.deepseek.com/v1",
+    model: "deepseek-chat",
+  },
+  qwen: {
+    endpoint: "https://dashscope.aliyuncs.com/compatible-mode/v1",
+    model: "qwen-plus",
+  },
+  zhipu: {
+    endpoint: "https://open.bigmodel.cn/api/paas/v4",
+    model: "glm-4-flash",
+  },
+  moonshot: {
+    endpoint: "https://api.moonshot.cn/v1",
+    model: "moonshot-v1-8k",
+  },
+  siliconflow: {
+    endpoint: "https://api.siliconflow.cn/v1",
+    model: "Qwen/Qwen2.5-72B-Instruct",
+  },
+};
+
+function applyCustomAIPreset() {
+  const preset = customAIPresets[getE("customAIPreset").value];
+  if (!preset) {
+    return;
+  }
+  getE("customAIEndpoint").value = preset.endpoint;
+  getE("customModel").value = preset.model;
+}
+
+function selectCustomAIPreset(endpoint, model) {
+  const preset = Object.entries(customAIPresets).find(
+    ([, value]) => value.endpoint === endpoint && value.model === model
+  );
+  getE("customAIPreset").value = preset ? preset[0] : "";
+}
+
 function sendKGAPIKey() {
   const provider = getE("kgProvider").value;
   const data = {
@@ -297,6 +336,7 @@ function sendKGAPIKey() {
     save_chat: false,
     commands_enable: false,
     endpoint: "",
+    custom_tts: false,
   };
   if (provider === "openai") {
     data.key = getE("openaiKey").value;
@@ -310,7 +350,16 @@ function sendKGAPIKey() {
     data.key = getE("customKey").value;
     data.model = getE("customModel").value;
     data.openai_prompt = getE("customAIPrompt").value;
-    data.endpoint = getE("customAIEndpoint").value;
+    data.endpoint = getE("customAIEndpoint").value.trim().replace(/\/+$/, "");
+    data.custom_tts = getE("customTTSYes").checked;
+    if (!data.key.trim() || !data.model.trim() || !data.endpoint) {
+      alert("请填写 API 密钥、API 地址和模型名称。");
+      return;
+    }
+    if (!/^https?:\/\//i.test(data.endpoint)) {
+      alert("API 地址必须以 http:// 或 https:// 开头。");
+      return;
+    }
     data.intentgraph = getE("intentyes").checked
     data.save_chat = getE("saveChatYes").checked
     data.commands_enable = getE("commandYes").checked
@@ -378,6 +427,8 @@ function updateKGAPI() {
         getE("customModel").value = data.model;
         getE("customAIPrompt").value = data.openai_prompt;
         getE("customAIEndpoint").value = data.endpoint;
+        getE("customTTSYes").checked = data.custom_tts === true;
+        selectCustomAIPreset(data.endpoint, data.model);
         getE("commandYes").checked = data.commands_enable
         getE("intentyes").checked = data.intentgraph
         getE("saveChatYes").checked = data.save_chat

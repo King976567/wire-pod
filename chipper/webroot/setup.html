@@ -126,12 +126,24 @@
 
             <span id="customAIInput" style="display: none">
               <small class="desc">支持所有兼容 OpenAI API 的 LLM 服务，适合高级用户。</small><br />
+              <label for="customAIPreset">常用服务预设：</label>
+              <select id="customAIPreset" onchange="applyCustomAIPreset()">
+                <option value="">手动填写 / 中转站</option>
+                <option value="deepseek">DeepSeek</option>
+                <option value="qwen">通义千问（DashScope）</option>
+                <option value="zhipu">智谱 GLM</option>
+                <option value="moonshot">月之暗面 Kimi</option>
+                <option value="siliconflow">SiliconFlow</option>
+              </select><br />
+              <small class="desc">预设只会填写接口地址和模型名称，不会覆盖 API 密钥。中转站请选择“手动填写 / 中转站”。</small><br />
               <label for="customKey">API 密钥 <small class="desc">（Ollama 只需填写“ollama”）</small>：</label>
               <input type="text" name="customKey" id="customKey" /><br />
               <label for="customAIEndpoint">API 地址 <small class="desc">（例如 http://localhost:11434/v1）</small>：</label>
               <input type="text" name="customAIEndpoint" id="customAIEndpoint" /><br />
               <label for="customModel">LLM 模型名称 <small class="desc">（例如“llama3”）</small>：</label>
               <input type="text" name="customModel" id="customModel" /><br />
+              <input type="checkbox" id="customTTSYes" name="customTTSselect" />
+              <label class="checkbox-label" for="customTTSYes">中文回答使用此接口的 OpenAI 兼容 TTS（需要中转站支持 /audio/speech）。</label><br />
               <label for="customAIPrompt">LLM 提示词 <small class="desc">（留空使用默认值）</small>：</label><br />
               <small><label class="desc" for="customAIPrompt">（默认：“你是一只友善、活泼的机器人 Vector。请让回答简洁而有信息量。”）</label></small>
               <input type="text" name="customAIPrompt" id="customAIPrompt" /><br />

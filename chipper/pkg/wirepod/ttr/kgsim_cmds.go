@@ -290,7 +290,10 @@ func DoSayText(input string, robot *vector.Vector) error {
 	// just before vector speaks
 	removeSpecialCharacters(input)
 
-	if (vars.APIConfig.STT.Language != "en-US" && vars.APIConfig.Knowledge.Provider == "openai") || vars.APIConfig.Knowledge.OpenAIVoiceWithEnglish {
+	useCustomTTS := vars.APIConfig.Knowledge.Provider == "custom" && vars.APIConfig.Knowledge.CustomTTS
+	if vars.APIConfig.Knowledge.OpenAIVoiceWithEnglish ||
+		(vars.APIConfig.STT.Language != "en-US" &&
+			(vars.APIConfig.Knowledge.Provider == "openai" || useCustomTTS)) {
 		err := DoSayText_OpenAI(robot, input)
 		return err
 	}
@@ -337,7 +340,14 @@ func DoSayText_OpenAI(robot *vector.Vector, input string) error {
 	// } else {
 	// 	openaiVoice = getOpenAIVoice(vars.APIConfig.Knowledge.OpenAIPrompt)
 	// }
-	oc := openai.NewClient(vars.APIConfig.Knowledge.Key)
+	var oc *openai.Client
+	if vars.APIConfig.Knowledge.Provider == "custom" {
+		conf := openai.DefaultConfig(vars.APIConfig.Knowledge.Key)
+		conf.BaseURL = vars.APIConfig.Knowledge.Endpoint
+		oc = openai.NewClientWithConfig(conf)
+	} else {
+		oc = openai.NewClient(vars.APIConfig.Knowledge.Key)
+	}
 	resp, err := oc.CreateSpeech(context.Background(), openai.CreateSpeechRequest{
 		Model:          openai.TTSModel1,
 		Input:          input,
