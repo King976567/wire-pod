@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <title>Vector Web App</title>
+  <title>Vector Web 应用</title>
   <!-- Meta Apple tags for a PWA like experience. -->
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
@@ -18,84 +18,83 @@
 <body onload="updateControlButtons()">
   <div id="outer">
     <div id="content">
-      <h1 class="center">Vector control (beta)</h1>
+      <h1 class="center">Vector 控制（测试版）</h1>
       <hr />
       <div class="main-nav-parent">
         <div class="main-nav-child">
-          <a href="#" onclick="goBackToSettings()"><i class="fa-solid fa-reply"></i><br />Back</a>
+          <a href="#" onclick="goBackToSettings()"><i class="fa-solid fa-reply"></i><br />返回</a>
         </div>
       </div>
       <hr />
 
       <div id="sdkActions">
-        <h2 class="center">Camera Feed</h2>
+        <h2 class="center">摄像头画面</h2>
         <hr class="small-hr">
         <div class="center" id="camStream"></div>
         <div style="text-align: left;" class="center">
           <label>
-            <input type="radio" name="cam" id="cam" onclick="showCamStream()">Begin Camera Stream<br>
+            <input type="radio" name="cam" id="cam" onclick="showCamStream()">开始摄像头串流<br>
           </label>
           <label>
-            <input type="radio" name="cam" id="cam" onclick="stopCamStream()" checked>Stop Camera Stream<br>
+            <input type="radio" name="cam" id="cam" onclick="stopCamStream()" checked>停止摄像头串流<br>
           </label>
         </div>
         <hr />
 
-        <h2 class="center">Behavior Control</h2>
+        <h2 class="center">行为控制</h2>
         <hr class="small-hr">
-        <small class="center">You must assume behavior control before performing any action</small>
+        <small class="center">执行任何操作前，必须先取得行为控制权</small>
         <div style="text-align: left;" class="center">
           <label>
             <input type="radio" name="control" id="assume_control"
-              onclick="sendForm('/api-sdk/assume_behavior_control?priority=high'); updateControlButtons();">Assume<br>
+              onclick="sendForm('/api-sdk/assume_behavior_control?priority=high'); updateControlButtons();">取得控制权<br>
           </label>
           <label>
             <input type="radio" name="control" id="release_control"
-              onclick="sendForm('/api-sdk/release_behavior_control'); updateControlButtons();" checked>Release<br>
+              onclick="sendForm('/api-sdk/release_behavior_control'); updateControlButtons();" checked>释放控制权<br>
           </label>
         </div>
         <hr />
 
-        <h2 class="center">Move Motors</h2>
+        <h2 class="center">电机控制</h2>
         <hr class="small-hr">
-        <small class="center">Toggle Keyboard Controls (unstable) <br> WASD for wheels, R-lift up, F-lift down, T-head
-          up, G-head down</small>
+        <small class="center">启用键盘控制（不稳定）<br>WASD 控制轮子，R/F 控制升降，T/G 控制头部上下</small>
         <div style="text-align: left;" class="center">
           <label>
-            <input type="radio" name="keycontrol" id="key_control_on" onclick="toggleKeyboard()" disabled>On<br>
+            <input type="radio" name="keycontrol" id="key_control_on" onclick="toggleKeyboard()" disabled>开启<br>
           </label>
           <label>
             <input type="radio" name="keycontrol" id="key_control_off" onclick="toggleKeyboard()" checked
-              disabled>Off<br>
+              disabled>关闭<br>
           </label>
         </div>
         <hr />
 
-        <h2 class="center">Mirror Mode</h2>
+        <h2 class="center">镜像模式</h2>
         <hr class="small-hr">
         <div style="text-align: left;" class="center">
           <label>
             <input type="radio" name="mirror" id="mirror_on" onclick="sendForm('/api-sdk/mirror_mode?enable=true')"
-              disabled>On<br>
+              disabled>开启<br>
           </label>
           <label>
             <input type="radio" name="mirror" id="mirror_off" onclick="sendForm('/api-sdk/mirror_mode?enable=false')"
-              checked disabled>Off<br>
+              checked disabled>关闭<br>
           </label>
         </div>
         <hr />
 
-        <h2 class="center">Say Text</h2>
+        <h2 class="center">朗读文字</h2>
         <div class="center">
-          <input class="tinput" name="textSay" id="textSay" type="text" placeholder="Put text here" disabled />
+          <input class="tinput" name="textSay" id="textSay" type="text" placeholder="在此输入文字" disabled />
         </div>
-        <button onclick="sayText()" type="submit">Submit</button>
+        <button onclick="sayText()" type="submit">提交</button>
       <hr />
-      <h2 class="center">Play Audio</h2>
+      <h2 class="center">播放音频</h2>
         <div class="center">
           <input type="file" id="fileInput" accept=".wav">
         </div>
-        <button id="uploadButton" style="display: none;" type="submit">Send Audio</button>
+        <button id="uploadButton" style="display: none;" type="submit">发送音频</button>
         <div div class="center">
           <audio id="audioOutput" controls></audio>
         </div>

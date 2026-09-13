@@ -72,7 +72,7 @@ async function updateBatteryInfo(serial, i) {
     }
     batteryLevel.className = "batteryLevel batteryUnknown";
     vectorFace.style.backgroundImage = "url(/assets/wififace.gif)";
-    tooltip.innerHTML = `<b>${serial}</b><br/>??%<br/> (Unable to connect)`;
+    tooltip.innerHTML = `<b>${serial}</b><br/>??%<br/> (无法连接)`;
     setTimeout(async () => {
       // Re-render the battery information
       updateBatteryInfo(serial, i);
@@ -123,8 +123,8 @@ async function updateBatteryInfo(serial, i) {
     } else if (batteryStatus["is_charging"]) {
       chargeTimeRemaining.innerHTML = "";
     }else {
-      chargeTimeRemaining.innerHTML = "Full";
-      // assume 100% if Full
+      chargeTimeRemaining.innerHTML = "已充满";
+      // assume 100% if 已充满
       batteryLevel.style.width = "100%";
       const month = new Date().getMonth();
       const day = new Date().getUTCDate();
@@ -208,7 +208,7 @@ async function renderBatteryInfo(serial, i = 0) {
   if (!batteryStatus) {
     batteryLevel.className = "batteryLevel batteryUnknown";
     vectorFace.style.backgroundImage = "url(/assets/wififace.gif)";
-    tooltip.innerHTML = `<b>${serial}</b><br/>??<br/> (Unable to connect)`;
+    tooltip.innerHTML = `<b>${serial}</b><br/>??<br/> (无法连接)`;
     setTimeout(async () => {
       // Re-render the battery information
       updateBatteryInfo(serial, i);

@@ -19,7 +19,7 @@ async function getSDKInfo() {
 
 async function getBatteryStatus(serial) {
   if (!serial) {
-    return 'Serial number is required';
+    return '必须提供机器人序列号';
   }
 
   try {

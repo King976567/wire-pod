@@ -30,7 +30,7 @@ function doSSHSetup() {
         }
       });
   } else {
-    updateSSHStatus("You must enter an IP address and upload a key.");
+    updateSSHStatus("请输入 IP 地址并上传密钥。");
   }
 }
 
@@ -42,7 +42,7 @@ function updateSSHSetup() {
         statusText = response;
         if (response.includes("done")) {
           updateSSHStatus(
-            "File transfer complete! Use the above section to complete bot setup. The bot should eventually be on the onboarding screen."
+            "文件传输完成！请使用上方的认证区域完成机器人设置，机器人随后应会进入引导界面。"
           );
           document.getElementById("oskrSetup").style.display = "block";
           clearInterval(interval);
@@ -50,14 +50,14 @@ function updateSSHSetup() {
           resp = response;
           if (response.includes("no route to host")) {
             resp =
-              "Wire-pod was unable to connect to the robot. Make sure the robot is running OSKR/dev software and that it is on the same network as this wire-pod instance. Also double-check the IP.";
+              "Wire-Pod 无法连接机器人。请确认机器人运行的是 OSKR/dev 固件，并且与 Wire-Pod 位于同一网络，同时检查 IP 地址是否正确。";
           }
           updateSSHStatus(resp);
           clearInterval(interval);
           document.getElementById("oskrSetup").style.display = "block";
           return;
         } else if (response.includes("not running")) {
-          updateSSHStatus("Initiating SSH transfer...");
+          updateSSHStatus("正在开始 SSH 传输……");
         } else {
           updateSSHStatus(response);
         }

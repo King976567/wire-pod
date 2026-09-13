@@ -25,14 +25,14 @@ function updateIntentSelection(element) {
           }
         });
         const label = document.createElement("label");
-        label.innerHTML = "Choose the intent: ";
+        label.innerHTML = "选择意图：";
         label.htmlFor = `${element}intents`;
         container.appendChild(label).appendChild(select);
 
         select.addEventListener("change", hideEditIntents);
       } else {
         const error = document.createElement("p");
-        error.innerHTML = "No intents found, you must add one first";
+        error.innerHTML = "没有找到意图，请先添加一个意图";
         container.appendChild(error);
       }
     }).catch(() => {
@@ -69,7 +69,7 @@ function createIntentSelect(element) {
     select.appendChild(option);
   });
   const label = document.createElement("label");
-  label.innerHTML = "Intent to send to robot after script executed:";
+  label.innerHTML = "脚本执行后发送给机器人的意图：";
   label.htmlFor = `${element}intents`;
   getE(element).innerHTML = "";
   getE(element).appendChild(label).appendChild(select);
@@ -109,11 +109,11 @@ function editFormCreate() {
         getE("editIntentForm").appendChild(form);
         showEditIntents();
       } else {
-        displayError("editIntentForm", "No intents found, you must add one first");
+        displayError("editIntentForm", "没有找到意图，请先添加一个意图");
       }
     }).catch((error) => {
       console.error(error);
-      displayError("editIntentForm", "Error fetching intents");
+      displayError("editIntentForm", "获取意图失败");
     })
 }
 
@@ -184,12 +184,12 @@ function sendIntentAdd() {
     luascript: form.elements["luaAdd"].value,
   };
   if (!data.name || !data.description || !data.utterances) {
-    displayMessage("addIntentStatus", "A required input is missing. You need a name, description, and utterances.");
-    alert("A required input is missing. You need a name, description, and utterances.")
+    displayMessage("addIntentStatus", "缺少必填项。需要填写名称、描述和触发语句。");
+    alert("缺少必填项。需要填写名称、描述和触发语句。")
     return
   }
 
-  displayMessage("addIntentStatus", "Adding...");
+  displayMessage("addIntentStatus", "正在添加……");
 
   fetch("/api/add_custom_intent", {
     method: "POST",
@@ -217,7 +217,7 @@ function sendWeatherAPIKey() {
     key: getE("apiKey").value,
   };
 
-  displayMessage("addWeatherProviderAPIStatus", "Saving...");
+  displayMessage("addWeatherProviderAPIStatus", "正在保存……");
 
   fetch("/api/set_weather_api", {
     method: "POST",
@@ -344,11 +344,11 @@ function sendKGAPIKey() {
 }
 
 function deleteSavedChats() {
-  if (confirm("Are you sure? This will delete all saved chats.")) {
+  if (confirm("确定吗？这将删除所有已保存的对话。")) {
     fetch("/api/delete_chats")
       .then((response) => response.text())
       .then(() => {
-        alert("Successfully deleted all saved chats.");
+        alert("已成功删除所有保存的对话。");
       });
   }
 }
@@ -393,7 +393,7 @@ function updateKGAPI() {
 function setSTTLanguage() {
   const data = { language: getE("languageSelection").value };
 
-  displayMessage("languageStatus", "Setting...");
+  displayMessage("languageStatus", "正在设置……");
 
   fetch("/api/set_stt_info", {
     method: "POST",
@@ -405,7 +405,7 @@ function setSTTLanguage() {
     .then((response) => response.text())
     .then((response) => {
       if (response.includes("downloading")) {
-        displayMessage("languageStatus", "Downloading model...");
+        displayMessage("languageStatus", "正在下载模型……");
         updateSTTLanguageDownload();
       } else {
         displayMessage("languageStatus", response);
@@ -420,7 +420,7 @@ function updateSTTLanguageDownload() {
     fetch("/api/get_download_status")
       .then((response) => response.text())
       .then((response) => {
-        displayMessage("languageStatus", response.includes("not downloading") ? "Initiating download..." : response)
+        displayMessage("languageStatus", response.includes("not downloading") ? "正在开始下载……" : response)
         if (response.includes("success") || response.includes("error")) {
           displayMessage("languageStatus", response);
           getE("languageSelectionDiv").style.display = "block";
@@ -513,7 +513,7 @@ function showLog() {
     fetch(url)
       .then((response) => response.text())
       .then((logs) => {
-        logDivArea.innerHTML = logs || "No logs yet, you must say a command to Vector. (this updates automatically)";
+        logDivArea.innerHTML = logs || "还没有日志，请对 Vector 说一句指令。（日志会自动更新）";
         if (getE("logscrollbottom").checked) {
           logDivArea.scrollTop = logDivArea.scrollHeight;
         }
@@ -522,7 +522,7 @@ function showLog() {
 }
 
 function checkUpdate() {
-  displayMessage("cVersion", "Checking for updates...");
+  displayMessage("cVersion", "正在检查更新……");
   displayMessage("aUpdate", "");
   displayMessage("cCommit", "");
   fetch("/api/get_version_info")
@@ -542,29 +542,29 @@ function checkUpdate() {
         // <p id="aUpdate"></p>
         displayMessage(
           "cVersion",
-          "There was an error: " + response
+          "发生错误：" + response
         );
         getE("updateGuideLink").style.display = "none";
       } else {
         const parsed = JSON.parse(response);
         if (parsed.fromsource) {
           if (!parsed.avail) {
-            displayMessage("aUpdate", `You are on the latest version.`);
+            displayMessage("aUpdate", `当前已是最新版本。`);
             getE("updateGuideLink").style.display = "none";
           } else {
-            displayMessage("aUpdate", `A newer version of WirePod (commit: ${parsed.currentcommit}) is available! Use this guide to update WirePod: `);
+            displayMessage("aUpdate", `发现更新版本的 Wire-Pod（提交：${parsed.currentcommit}）。请参阅更新指南。`);
             getE("updateGuideLink").style.display = "block";
           }
-          displayMessage("cVersion", `Installed Commit: ${parsed.installedcommit}`);
+          displayMessage("cVersion", `已安装提交：${parsed.installedcommit}`);
         } else {
-          displayMessage("cVersion", `Installed Version: ${parsed.installedversion}`);
-          displayMessage("cCommit", `Based on wire-pod commit: ${parsed.installedcommit}`);
+          displayMessage("cVersion", `已安装版本：${parsed.installedversion}`);
+          displayMessage("cCommit", `基于 Wire-Pod 提交：${parsed.installedcommit}`);
           getE("cCommit").style.display = "block";
           if (parsed.avail) {
-            displayMessage("aUpdate", `A newer version of WirePod (${parsed.currentversion}) is available! Use this guide to update WirePod: `);
+            displayMessage("aUpdate", `发现更新版本的 Wire-Pod（${parsed.currentversion}）。请参阅更新指南。`);
             getE("updateGuideLink").style.display = "block";
           } else {
-            displayMessage("aUpdate", "You are on the latest version.");
+            displayMessage("aUpdate", "当前已是最新版本。");
             getE("updateGuideLink").style.display = "none";
           }
         }
@@ -578,7 +578,7 @@ function showLanguage() {
     .then((response) => response.json())
     .then((parsed) => {
       if (parsed.provider !== "vosk" && parsed.provider !== "whisper.cpp") {
-        displayError("languageStatus", `To set the STT language, the provider must be Vosk or Whisper. The current one is '${parsed.sttProvider}'.`);
+        displayError("languageStatus", `要设置语音识别语言，服务商必须是 Vosk 或 Whisper。当前服务商为‘${parsed.sttProvider}'.`);
         getE("languageSelectionDiv").style.display = "none";
       } else {
         getE("languageSelectionDiv").style.display = "block";

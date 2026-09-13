@@ -132,7 +132,7 @@ function getPhotos() {
     if (xhr.response == "null") {
       var noPhotos = document.createElement("p");
       noPhotos.innerHTML =
-        "No photos found. Tell Vector to take a photo, then refresh the list.";
+        "没有找到照片。请让 Vector 拍照，然后刷新列表。";
       photoSection.appendChild(noPhotos);
       return;
     }
@@ -152,7 +152,7 @@ function getPhotos() {
       thumbDelete.onclick = function () {
         deletePhoto(imgId);
       };
-      thumbDelete.innerHTML = "Delete";
+      thumbDelete.innerHTML = "删除";
       thumb.appendChild(thumbLink);
       thumb.appendChild(thumbDelete);
       photoSection.appendChild(thumb);
@@ -161,7 +161,7 @@ function getPhotos() {
 }
 
 function deletePhoto(id) {
-  if (confirm("Are you sure?")) {
+  if (confirm("确定吗？")) {
     // run code here
     let xhr = new XMLHttpRequest();
     xhr.open("POST", "/api-sdk/delete_image?serial=" + esn + "&id=" + id);
@@ -180,7 +180,7 @@ function goToControlPage() {
 function sendLocation() {
   locationInput = document.getElementById("locationInput").value;
   if (locationInput == "") {
-    alert("Location cannot be blank.");
+    alert("位置不能为空。");
     return;
   }
   let xhr = new XMLHttpRequest();
@@ -198,7 +198,7 @@ function sendLocation() {
 function sendTimeZone() {
   timezone = document.getElementById("tzInput").value;
   if (timezone == "") {
-    alert("Time zone cannot be blank.");
+    alert("时区不能为空。");
     return;
   }
   let xhr = new XMLHttpRequest();
@@ -248,15 +248,15 @@ function updateStats() {
     var s1 = document.getElementById("statsSection");
     s1.innerHTML = "";
     var s1p1 = document.createElement("p");
-    s1p1.textContent = "Days alive: " + jdocDays;
+    s1p1.textContent = "运行天数：" + jdocDays;
     var s1p2 = document.createElement("p");
-    s1p2.textContent = "Reacted to trigger word: " + jdocTrigger + " times";
+    s1p2.textContent = "响应唤醒词次数：" + jdocTrigger + " 次";
     var s1p3 = document.createElement("p");
-    s1p3.textContent = "Utility features used: " + featuresUsed;
+    s1p3.textContent = "使用的实用功能：" + featuresUsed;
     var s1p4 = document.createElement("p");
-    s1p4.textContent = "Seconds petted: " + Math.round(petMs / 1000);
+    s1p4.textContent = "被抚摸秒数：" + Math.round(petMs / 1000);
     var s1p5 = document.createElement("p");
-    s1p5.textContent = "Distance moved (cm): " + Math.round(cmMoved / 100);
+    s1p5.textContent = "移动距离（厘米）：" + Math.round(cmMoved / 100);
     s1.appendChild(s1p1);
     s1.appendChild(s1p2);
     s1.appendChild(s1p3);
@@ -402,14 +402,14 @@ function getCurrentSettings() {
 
     var s10 = document.getElementById("currentLocation");
     const s10P = document.createElement("p");
-    s10P.textContent = "Current Location Setting: " + `${location}`;
+    s10P.textContent = "当前位置设置：" + `${location}`;
     document.getElementById("locationInput").placeholder = `${location}`;
     s10.innerHTML = "";
     s10.appendChild(s10P);
 
     var s11 = document.getElementById("currentTimeZone");
     const s11P = document.createElement("p");
-    s11P.textContent = "Current Time Zone Setting: " + `${timezone}`;
+    s11P.textContent = "当前时区设置：" + `${timezone}`;
     document.getElementById("tzInput").value = `${timezone}`;
     s11.innerHTML = "";
     s11.appendChild(s11P);

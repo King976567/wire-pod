@@ -6,7 +6,7 @@ let processedAudioBlob = null;
 document.getElementById('fileInput').addEventListener('change', async () => {
     const fileInput = document.getElementById('fileInput');
     if (!fileInput.files.length) {
-        alert('Please, select a WAV file');
+        alert('请选择 WAV 文件');
         return;
     }
 
@@ -117,7 +117,7 @@ function setString(view, offset, string) {
 
 document.getElementById('uploadButton').addEventListener('click', async () => {
     if (!processedAudioBlob) {
-        alert('No processed audio to send.');
+        alert('没有可发送的处理后音频。');
         return;
     }
 

@@ -14,7 +14,7 @@ getSDKInfo().then((jsonResp) => {
   }
 }).catch((error) => {
   console.error('Unable to get SDK info:', error);
-  alert("Error getting robot list. This either means that no robots are authenticated or a previously authenticated robot is not connected.");
+  alert("获取机器人列表失败。可能是尚未认证机器人，或之前认证的机器人当前未连接。");
   window.location.href = "/";
 });
 
